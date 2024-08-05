@@ -8,7 +8,6 @@ package org.hapjs.component.constants;
 import android.content.res.Configuration;
 import android.text.TextUtils;
 import android.util.Log;
-import org.hapjs.card.sdk.utils.CardThemeUtils;
 import org.hapjs.common.utils.DisplayUtil;
 import org.hapjs.common.utils.FloatUtil;
 import org.hapjs.component.Component;
@@ -49,14 +48,6 @@ public class Attributes {
             return defValue;
         }
         String temp = value.toString().trim();
-        if (temp.startsWith(CardThemeUtils.KEY_THEME)) {
-            String themeValue = CardThemeUtils.getThemeValue(temp);
-            if (!TextUtils.isEmpty(themeValue)) {
-                temp = themeValue;
-            } else {
-                return defValue;
-            }
-        }
         try {
             //px
             if (temp.endsWith(Unit.PX)) {
@@ -120,14 +111,6 @@ public class Attributes {
             return defValue;
         }
         String temp = value.toString().trim();
-        if (temp.startsWith(CardThemeUtils.KEY_THEME)) {
-            String themeValue = CardThemeUtils.getThemeValue(temp);
-            if (!TextUtils.isEmpty(themeValue)) {
-                temp = themeValue;
-            } else {
-                return defValue;
-            }
-        }
         try {
             // px
             if (temp.endsWith(Unit.PX)) {
@@ -180,14 +163,6 @@ public class Attributes {
             return defValue;
         }
         String temp = value.toString().trim();
-        if (temp.startsWith(CardThemeUtils.KEY_THEME)) {
-            String themeValue = CardThemeUtils.getThemeValue(temp);
-            if (!TextUtils.isEmpty(themeValue)) {
-                temp = themeValue;
-            } else {
-                return defValue;
-            }
-        }
         try {
             //px
             if (temp.endsWith(Unit.PX)) {
@@ -250,7 +225,7 @@ public class Attributes {
         } else if (value.endsWith(Unit.DP)) {
             return true;
         } else {
-            return value.startsWith(CardThemeUtils.KEY_THEME);
+            return false;
         }
     }
 
@@ -281,15 +256,7 @@ public class Attributes {
         }
 
         if (value instanceof String) {
-            String value1 = (String) value;
-            if (value1.startsWith(CardThemeUtils.KEY_THEME)) {
-                String themeValue = CardThemeUtils.getThemeValue(value1);
-                if (!TextUtils.isEmpty(themeValue)) {
-                    return themeValue;
-                }
-                return defValue;
-            }
-            return value1;
+            return  (String) value;
         }
 
         return value.toString();

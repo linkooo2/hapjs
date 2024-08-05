@@ -2,24 +2,48 @@
  * Copyright (c) 2021, the hapjs-platform Project Contributors
  * SPDX-License-Identifier: Apache-2.0
  */
+def specialDirectory = new File(rootDir, '../../../external/jsenv')
+if (specialDirectory.exists()) {
+    println(specialDirectory)
+    System.properties['combinecard'] = true
+} else {
+    System.properties['combinecard'] = false
+}
 
 include ':app-impl', ':app', ':annotation-processor', ':annotation', ':debug-log'
 
 if ('repo' != System.properties['moduleDepsType']) {
-    include ':features', ':runtime', ':widgets', ':card-api', ':card-common', ':card-support', ':inspector',
+    include ':features', ':runtime', ':widgets', ':inspector',
             ':platform', ':account', ':pay', ':push', ':stats',
             ':alipay', ':share', ':wxpay', ':qqaccount', ':wxaccount', ':wbaccount', ":asr",
             ':features-adapter',
             ':exchange', ':exchange-common',
-            ':annotation', ':annotation-processor'
+            ':annotation', ':annotation-processor',
+            ':jsenv'
+    if (System.properties['combinecard']) {
+        include ':card-features', ':card-runtime', ':card-widgets', ':card-api', ':card-common',
+                ':card-support', ':card-debug-log', ':card-inspector', ':card-platform',
+                ':card-platform', ':card-features-adapter', ':card-annotation',
+                ':card-annotation-processor'
+        //card
+        project(':card-features').projectDir = new File("../../../hapcard/core/runtime/android/card-features")
+        project(':card-runtime').projectDir = new File("../../../hapcard/core/runtime/android/card-runtime")
+        project(':card-widgets').projectDir = new File("../../../hapcard/core/runtime/android/card-widgets")
+        project(':card-api').projectDir = new File("../../../hapcard/core/runtime/android/card-api")
+        project(':card-common').projectDir = new File("../../../hapcard/core/runtime/android/card-common")
+        project(':card-support').projectDir = new File("../../../hapcard/core/runtime/android/card-support")
+        project(':card-debug-log').projectDir = new File("../../../hapcard/core/runtime/android/card-debug-log")
+        project(':card-inspector').projectDir = new File("../../../hapcard/debug/engine/android/card-inspector")
+        project(':card-platform').projectDir = new File("../../../hapcard/platform/platform/android/card-platform")
+        project(':card-features-adapter').projectDir = new File("../../../hapcard/platform/platform/android/card-features")
+        project(':card-annotation').projectDir = new File("../../../hapcard/core/runtime/android/card-annotation")
+        project(':card-annotation-processor').projectDir = new File("../../../hapcard/core/runtime/android/card-annotation-processor")
+    }
 
     // core
     project(':features').projectDir = new File("../../../core/runtime/android/features")
     project(':runtime').projectDir = new File("../../../core/runtime/android/runtime")
     project(':widgets').projectDir = new File("../../../core/runtime/android/widgets")
-    project(':card-api').projectDir = new File("../../../core/runtime/android/card-api")
-    project(':card-common').projectDir = new File("../../../core/runtime/android/card-common")
-    project(':card-support').projectDir = new File("../../../core/runtime/android/card-support")
     project(':debug-log').projectDir = new File("../../../core/runtime/android/debug-log")
 
     project(':inspector').projectDir = new File("../../../debug/engine/android/inspector")
@@ -51,4 +75,5 @@ if ('repo' != System.properties['moduleDepsType']) {
 
     project(':annotation').projectDir = new File("../../../core/runtime/android/annotation")
     project(':annotation-processor').projectDir = new File("../../../core/runtime/android/annotation-processor")
+    project(':jsenv').projectDir = new File("../../../external/jsenv")
 }

@@ -26,11 +26,11 @@ import java.util.List;
 import org.hapjs.bridge.annotation.DependencyAnnotation;
 import org.hapjs.bridge.permission.RuntimePermissionProvider;
 import org.hapjs.cache.Cache;
+import org.hapjs.cache.CacheConstants;
 import org.hapjs.cache.CacheStorage;
 import org.hapjs.cache.DefaultFileNotFoundHandler;
 import org.hapjs.cache.InstallFileFlagManager;
 import org.hapjs.cache.PackageListener;
-import org.hapjs.card.support.CardConstants;
 import org.hapjs.common.CommonMsgProvider;
 import org.hapjs.common.DefaultCommonMsgProviderImpl;
 import org.hapjs.common.net.BanNetworkProvider;
@@ -145,7 +145,7 @@ public class PlatformRuntime extends Runtime implements Application.ActivityLife
                                 }
                                 updateShortcutAsync(mContext, false, pkg);
                                 sendPackageChangeBroadcast(pkg,
-                                        CardConstants.ACTION_PACKAGE_PACKAGE_ADDED);
+                                        CacheConstants.ACTION_PACKAGE_PACKAGE_ADDED);
                                 InstalledSubpackageManager.getInstance().clearOutdatedSubpackages(
                                         mContext, pkg, appInfo.getVersionCode());
                             }
@@ -158,7 +158,7 @@ public class PlatformRuntime extends Runtime implements Application.ActivityLife
                                 }
                                 updateShortcutAsync(mContext, false, pkg);
                                 sendPackageChangeBroadcast(pkg,
-                                        CardConstants.ACTION_PACKAGE_PACKAGE_UPDATED);
+                                        CacheConstants.ACTION_PACKAGE_PACKAGE_UPDATED);
                                 InstalledSubpackageManager.getInstance().clearOutdatedSubpackages(
                                         mContext, pkg, appInfo.getVersionCode());
                             }
@@ -166,7 +166,7 @@ public class PlatformRuntime extends Runtime implements Application.ActivityLife
                             @Override
                             public void onPackageRemoved(String pkg) {
                                 sendPackageChangeBroadcast(pkg,
-                                        CardConstants.ACTION_PACKAGE_PACKAGE_REMOVED);
+                                        CacheConstants.ACTION_PACKAGE_PACKAGE_REMOVED);
                                 InstalledSubpackageManager.getInstance().clearSubpackages(mContext, pkg);
                             }
 
@@ -210,8 +210,8 @@ public class PlatformRuntime extends Runtime implements Application.ActivityLife
     private void sendPackageChangeBroadcast(String pkg, String action) {
         Intent intent = new Intent(action);
         intent.addCategory(Intent.CATEGORY_DEFAULT);
-        intent.putExtra(CardConstants.EXTRA_PACKAGE, pkg);
-        intent.putExtra(CardConstants.EXTRA_PLATFORM, mContext.getPackageName());
+        intent.putExtra(CacheConstants.EXTRA_PACKAGE, pkg);
+        intent.putExtra(CacheConstants.EXTRA_PLATFORM, mContext.getPackageName());
         mContext.sendBroadcast(intent);
         // send to self explicitly above 8.0
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

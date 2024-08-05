@@ -5,12 +5,12 @@
 
 include 'app'
 if ('repo' != System.properties['moduleDepsType']) {
-    include ':card-common', ':android-stub', ':android-hack', ':card-sdk', ':card-api', ':debug-log', ':app-impl'
+    include ':card-common', ':android-stub', ':android-hack', ':card-sdk', ':card-api', ':card-debug-log', ':app-impl'
     //card sdk
     project(':android-stub').projectDir = new File("../../../core/runtime/android/android-stub")
     project(':android-hack').projectDir = new File("../../../core/runtime/android/android-hack")
-    project(':card-common').projectDir = new File("../../../core/runtime/android/card-common")
-    project(':card-sdk').projectDir = new File("../../../core/runtime/android/card-sdk")
-    project(':card-api').projectDir = new File("../../../core/runtime/android/card-api")
-    project(':debug-log').projectDir = new File("../../../core/runtime/android/debug-log")
+    project(':card-common').projectDir = new File("../../../hapcard/core/runtime/android/card-common")
+    project(':card-sdk').projectDir = new File("../../../hapcard/core/runtime/android/card-sdk")
+    project(':card-api').projectDir = new File("../../../hapcard/core/runtime/android/card-api")
+    project(':card-debug-log').projectDir = new File("../../../hapcard/core/runtime/android/card-debug-log")
 }

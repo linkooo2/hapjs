@@ -30,7 +30,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:' + rootProject.recyclerviewVersion
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:' + rootProject.swiperefreshlayoutVersion
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
-    implementation project(':debug-log')
+    implementation project(':card-debug-log')
     if ('repo' != System.properties['moduleDepsType']) {
         implementation project(':card-common')
         implementation project(':card-sdk')

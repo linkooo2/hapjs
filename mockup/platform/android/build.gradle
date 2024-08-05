@@ -24,6 +24,7 @@ buildscript {
         // in the individual module build.gradle files
     }
     apply from: '../../../development/gradle-plugin/prebuilts/2.3.0/buildscript.gradle', to: buildscript
+    apply from: '../../../hapcard/development/gradle-plugin/prebuilts/1.0.0/buildscript.gradle', to: buildscript
 }
 
 apply from: '../../../core/runtime/android/version.gradle', to: rootProject
@@ -41,10 +42,10 @@ allprojects {
     }
 }
 
-def javaModules = ['card-api', 'annotation', 'annotation-processor']
+def javaModules = ['card-api', 'annotation', 'annotation-processor','card-annotation', 'card-annotation-processor']
 def applicationModules = ['app']
-def ndkBuildModules = ['inspector']
-def runtimeModule = 'runtime'
+def ndkBuildModules = ['inspector', 'card-inspector']
+def runtimeModule = ['runtime', 'card-runtime']
 
 if (project.properties['useSpecifiedNdk'] == 'true') {
     exec {
@@ -189,6 +190,7 @@ subprojects {
     apply plugin: 'kotlin-kapt'
     apply plugin: 'org.hapjs.gradle.plugin.annotation.executor'
     apply plugin: 'org.hapjs.gradle.plugin.annotation.generator'
+    apply plugin: 'org.hapjs.card.gradle.plugin.annotation.generator'  // card
     apply plugin: "com.github.spotbugs"
 
     android {
@@ -266,6 +268,9 @@ subprojects {
         api fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
         implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
         kapt project(':annotation-processor')
+        if (System.properties['combinecard']) {
+            kapt project(':card-annotation-processor')
+        }
         androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
             exclude group: 'com.android.support', module: 'support-annotations'
             exclude group: 'com.google.code.findbugs', module: 'jsr305'

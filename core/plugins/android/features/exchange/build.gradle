@@ -7,8 +7,10 @@ dependencies {
     if ('repo' != System.properties['moduleDepsType']) {
         api project(':runtime')
         api project(':exchange-common')
+        api project(':jsenv')
     } else {
         api 'org.hapjs:runtime:' + rootProject.appVersionName
         api 'org.hapjs:exchange-common:' + rootProject.appVersionName
+        api 'org.hapjs:jsenv:' + rootProject.appVersionName
     }
 }

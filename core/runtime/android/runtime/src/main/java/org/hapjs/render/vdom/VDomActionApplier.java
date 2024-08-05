@@ -7,9 +7,7 @@ package org.hapjs.render.vdom;
 
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 import java.util.Map;
-import org.hapjs.bridge.HostCallbackManager;
 import org.hapjs.component.Component;
 import org.hapjs.component.ComponentDataHolder;
 import org.hapjs.component.ComponentFactory;
@@ -17,7 +15,6 @@ import org.hapjs.component.Container;
 import org.hapjs.component.Recycler;
 import org.hapjs.component.RecyclerDataItem;
 import org.hapjs.component.bridge.RenderEventCallback;
-import org.hapjs.logging.CardLogManager;
 import org.hapjs.render.CallBackJsUtils;
 import org.hapjs.render.DebugUtils;
 import org.hapjs.render.RootView;
@@ -28,7 +25,6 @@ import org.hapjs.render.skeleton.SkeletonProvider;
 import org.hapjs.runtime.HapEngine;
 import org.hapjs.runtime.inspect.InspectorManager;
 import org.hapjs.runtime.inspect.InspectorVElementType;
-import org.json.JSONArray;
 
 public class VDomActionApplier {
 
@@ -123,9 +119,6 @@ public class VDomActionApplier {
             case VDomChangeAction.ACTION_CREATE_FINISH: {
                 doc.setCreateFinishFlag(true);
                 jsThread.postInitializePage(action.pageId);
-                if (HapEngine.getInstance(jsThread.getAppInfo().getPackage()).isCardMode()) {
-                    HostCallbackManager.getInstance().onCardCreate(action.pageId);
-                }
                 if (action.jsCallbacks) {
                     CallBackJsUtils.getInstance().callBackJs(jsThread, action.pageId, CallBackJsUtils.TYPE_PAGE_CREATE_FINISH, action.vId);
                 }
@@ -277,7 +270,6 @@ public class VDomActionApplier {
                 break;
             }
             case VDomChangeAction.ACTION_STATISTICS: {
-                recordStatistics(doc, action);
                 break;
             }
             case VDomChangeAction.ACTION_PAGE_SCROLL: {
@@ -425,39 +417,6 @@ public class VDomActionApplier {
 
         for (VDomChangeAction child : action.children) {
             updateStyles(doc, child);
-        }
-    }
-
-    /**
-     * js 侧发送统计数据，目前仅在卡片模式下统计 click 事件
-     */
-    private void recordStatistics(VDocument doc, VDomChangeAction action) {
-        if (!CardLogManager.hasListener()) {
-            return;
-        }
-        Map<String, Object> extra = action.extra;
-        Object type = extra.get("type"); // 统计时间类型
-        if (!"click".equals(type)) {
-            return;
-        }
-        Object listeners = extra.get("listeners"); // 处理了该事件的所有 view
-        if (listeners instanceof JSONArray) {
-            for (int i = 0; i < ((JSONArray) listeners).length(); i++) {
-                Object ref = ((JSONArray) listeners).opt(i);
-                if (ref instanceof String) {
-                    int vid = Integer.parseInt((String) ref);
-                    VElement ele = doc.getElementById(vid);
-                    if (ele != null) {
-                        Component component = ele.getComponent();
-                        DocComponent rootComponent = component.getRootComponent();
-                        if (rootComponent != null) {
-                            RootView rootView = (RootView) rootComponent.getHostView();
-                            View view = component.getHostView();
-                            CardLogManager.logClickEvent(rootView.getUrl(), ele.getTagName(), view);
-                        }
-                    }
-                }
-            }
         }
     }
 }

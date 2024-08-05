@@ -1,0 +1,22 @@
+//configurations.maybeCreate("default")
+//artifacts.add("default", file('jsenv-1.1.0.aar'))
+def JSENV_VERSION = "1.2.8"
+
+// add version file
+task addVersionFile(type: Exec) {
+    def versionFilePath = "" + projectDir + "/src/main/resources/jsenv_version"
+    File versionFile = new File(versionFilePath)
+    versionFile.withOutputStream { os ->
+        os << ("jsenv_aar_version = " + JSENV_VERSION).getBytes();
+    }
+}
+dependencies {
+    def jsenvArtifactId = 'jsenv'
+    def jsenvVersionCode = JSENV_VERSION
+    if ('true' == project.properties['noV8Symbols']) {
+        jsenvArtifactId += '-no-v8symbols'
+    }
+    def jsenv = jsenvArtifactId + "-" + jsenvVersionCode + ".aar"
+
+    api fileTree(dir: 'jsenv-libs', include: [jsenv])
+}

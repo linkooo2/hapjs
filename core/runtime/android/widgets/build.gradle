@@ -5,6 +5,7 @@
 
 dependencies {
     api project(':runtime')
+    api project(':jsenv')
 
     implementation "com.google.android.material:material:${rootProject.androidXVersion}"
     implementation "androidx.appcompat:appcompat:${rootProject.appcompatVersion}"

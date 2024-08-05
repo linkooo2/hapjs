@@ -31,7 +31,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import org.hapjs.debug.log.DebuggerLogUtil;
+import org.hapjs.card.debug.log.DebuggerLogUtil;
 import org.hapjs.debugger.app.impl.R;
 import org.hapjs.debugger.debug.AppDebugManager;
 import org.hapjs.debugger.server.Server;

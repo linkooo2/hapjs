@@ -7,13 +7,10 @@ package org.hapjs.render.css.media;
 
 import android.content.Context;
 import android.content.res.Configuration;
-import org.hapjs.card.api.CardConfig;
-import org.hapjs.card.sdk.utils.CardConfigUtils;
 import org.hapjs.common.compat.BuildPlatform;
 import org.hapjs.common.utils.DisplayUtil;
 import org.hapjs.model.AppInfo;
 import org.hapjs.runtime.DarkThemeUtil;
-import org.hapjs.runtime.HapEngine;
 
 public class MediaPropertyInfoImpl implements MediaPropertyInfo {
 
@@ -64,30 +61,21 @@ public class MediaPropertyInfoImpl implements MediaPropertyInfo {
 
     @Override
     public int getPrefersColorScheme() {
-        if (DisplayUtil.getHapEngine().getMode() == HapEngine.Mode.CARD) {
-            if (CardConfigUtils.get(CardConfig.KEY_DARK_MODE) instanceof Integer
-                    && (Integer) CardConfigUtils.get(CardConfig.KEY_DARK_MODE)
-                    == DarkThemeUtil.THEME_NIGHT_YES) {
-                return DarkThemeUtil.THEME_NIGHT_YES;
-            }
-        } else {
-            int themeMode = 0;
-            AppInfo appInfo = DisplayUtil.getHapEngine().getApplicationContext().getAppInfo();
-            if (appInfo != null && appInfo.getDisplayInfo() != null) {
-                themeMode = appInfo.getDisplayInfo().getThemeMode();
-            }
-            switch (themeMode) {
-                case DarkThemeUtil.THEME_NIGHT_NO:
-                case DarkThemeUtil.THEME_NIGHT_YES:
-                    return themeMode;
-                default:
-                    if (DarkThemeUtil.isDarkMode()) {
-                        return DarkThemeUtil.THEME_NIGHT_YES;
-                    } else {
-                        return DarkThemeUtil.THEME_NIGHT_NO;
-                    }
-            }
+        int themeMode = 0;
+        AppInfo appInfo = DisplayUtil.getHapEngine().getApplicationContext().getAppInfo();
+        if (appInfo != null && appInfo.getDisplayInfo() != null) {
+            themeMode = appInfo.getDisplayInfo().getThemeMode();
         }
-        return 0;
+        switch (themeMode) {
+            case DarkThemeUtil.THEME_NIGHT_NO:
+            case DarkThemeUtil.THEME_NIGHT_YES:
+                return themeMode;
+            default:
+                if (DarkThemeUtil.isDarkMode()) {
+                    return DarkThemeUtil.THEME_NIGHT_YES;
+                } else {
+                    return DarkThemeUtil.THEME_NIGHT_NO;
+                }
+        }
     }
 }

@@ -14,7 +14,6 @@ import android.util.Log;
 import org.hapjs.bridge.ApplicationContext;
 import org.hapjs.bridge.HybridRequest;
 import org.hapjs.cache.CacheStorage;
-import org.hapjs.card.sdk.utils.CardConfigUtils;
 import org.hapjs.logging.LogHelper;
 import org.hapjs.logging.RuntimeLogManager;
 import org.hapjs.logging.Source;
@@ -196,13 +195,6 @@ public class RouterUtils {
         Source source = Source.currentSource();
         if (source != null) {
             extras.putString(EXTRA_HAP_SOURCE_ENTRY, source.getEntry().toJson().toString());
-        }
-        // card 模式下传递宿主设置的 source 信息
-        if (HapEngine.getInstance(appPackage).isCardMode()) {
-            Source hostSource = CardConfigUtils.getHostSource();
-            if (hostSource != null) {
-                extras.putString(EXTRA_CARD_HOST_SOURCE, hostSource.toJson().toString());
-            }
         }
         String session = LogHelper.getSession(appPackage);
         if (!TextUtils.isEmpty(session)) {

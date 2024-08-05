@@ -43,7 +43,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
-import org.hapjs.debug.log.DebuggerLogUtil;
+import org.hapjs.card.debug.log.DebuggerLogUtil;
 import org.hapjs.debugger.AppLaunchTestActivity;
 import org.hapjs.debugger.SignatureActivity;
 import org.hapjs.debugger.app.impl.R;

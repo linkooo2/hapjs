@@ -66,6 +66,16 @@ dependencies {
         implementation project(':debug-log')
         implementation project(':app-impl')
         implementation project(':asr')
+        //card
+        if (System.properties['combinecard']) {
+            implementation project(':card-runtime')
+            implementation project(':card-widgets')
+            implementation project(':card-features')
+            implementation project(':card-inspector')
+            implementation project(':card-platform')
+            implementation project(':card-features-adapter')
+            implementation project(':card-debug-log')
+        }
     } else {
         implementation 'org.hapjs:runtime:' + rootProject.appVersionName
         implementation 'org.hapjs:widgets:' + rootProject.appVersionName
@@ -88,6 +98,16 @@ dependencies {
         implementation 'org.hapjs:sentry:' + rootProject.appVersionName
         implementation 'org.hapjs:debug-log:' + rootProject.appVersionName
         implementation 'org.hapjs:app-impl:' + rootProject.appVersionName
+        //card
+        if (System.properties['combinecard']) {
+            implementation 'org.hapjs:card-runtime:' + rootProject.appVersionName
+            implementation 'org.hapjs:card-widgets:' + rootProject.appVersionName
+            implementation 'org.hapjs:card-features:' + rootProject.appVersionName
+            implementation 'org.hapjs:card-inspector:' + rootProject.appVersionName
+            implementation 'org.hapjs:card-platform:' + rootProject.appVersionName
+            implementation 'org.hapjs:card-features-adapter:' + rootProject.appVersionName
+            implementation 'org.hapjs:card-debug-log:' + rootProject.appVersionName
+        }
     }
 
     implementation 'androidx.multidex:multidex:2.0.0'

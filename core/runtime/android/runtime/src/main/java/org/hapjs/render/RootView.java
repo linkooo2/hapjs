@@ -54,7 +54,6 @@ import org.hapjs.bridge.HybridRequest;
 import org.hapjs.bridge.HybridView;
 import org.hapjs.bridge.impl.android.AndroidViewClient;
 import org.hapjs.bridge.storage.file.InternalUriUtils;
-import org.hapjs.card.api.IRenderListener;
 import org.hapjs.common.executors.AbsTask;
 import org.hapjs.common.executors.Executor;
 import org.hapjs.common.executors.Executors;
@@ -79,10 +78,6 @@ import org.hapjs.component.view.keyevent.KeyEventManager;
 import org.hapjs.event.ApplicationLaunchEvent;
 import org.hapjs.event.EventManager;
 import org.hapjs.event.FirstRenderActionEvent;
-import org.hapjs.io.JavascriptReader;
-import org.hapjs.io.RpkSource;
-import org.hapjs.io.Source;
-import org.hapjs.io.TextReader;
 import org.hapjs.logging.RuntimeLogManager;
 import org.hapjs.model.AppInfo;
 import org.hapjs.model.DisplayInfo;
@@ -91,6 +86,7 @@ import org.hapjs.model.RoutableInfo;
 import org.hapjs.model.ScreenOrientation;
 import org.hapjs.model.videodata.VideoCacheManager;
 import org.hapjs.render.component.CallingComponent;
+import org.hapjs.render.jsruntime.IRenderListener;
 import org.hapjs.render.jsruntime.JsBridge;
 import org.hapjs.render.jsruntime.JsThread;
 import org.hapjs.render.jsruntime.JsThreadFactory;
@@ -112,7 +108,6 @@ import org.hapjs.runtime.ProviderManager;
 import org.hapjs.runtime.R;
 import org.hapjs.runtime.inspect.InspectorManager;
 import org.hapjs.system.SysOpProvider;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -995,8 +990,6 @@ public class RootView extends FrameLayout
                         RuntimeLogManager.getDefault()
                                 .logAsyncThreadTaskEnd(mPackage, "loadAppInfo");
                         if (mIsDestroyed) {
-                            onRenderFailed(IRenderListener.ErrorCode.ERROR_UNKNOWN,
-                                    "RootView has destroy");
                             return;
                         }
 

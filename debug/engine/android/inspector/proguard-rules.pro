@@ -40,14 +40,14 @@
     native <methods>;
 }
 
--keep class * implements com.facebook.stetho.inspector.protocol.ChromeDevtoolsDomain {
-    @com.facebook.stetho.inspector.protocol.ChromeDevtoolsMethod public *;
+-keep class * implements com.facebook.card.stetho.inspector.protocol.ChromeDevtoolsDomain {
+    @com.facebook.card.stetho.inspector.protocol.ChromeDevtoolsMethod public *;
 }
 
 -keepclassmembers class ** {
     void <init>();
-    @com.facebook.stetho.json.annotation.JsonProperty public *;
-    @com.facebook.stetho.json.annotation.JsonValue public *;
+    @com.facebook.card.stetho.json.annotation.JsonProperty public *;
+    @com.facebook.card.stetho.json.annotation.JsonValue public *;
 }
 
 -keepclassmembers class org.hapjs.inspector.V8Inspector {

@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.hapjs.debug.log.DebuggerLogUtil;
+import org.hapjs.card.debug.log.DebuggerLogUtil;
 import org.hapjs.debugger.DebuggerApplication;
 import org.hapjs.debugger.app.impl.R;
 import org.hapjs.debugger.pm.PackageInfo;

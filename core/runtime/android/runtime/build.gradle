@@ -28,16 +28,6 @@ def getPlatformVersionName() {
 
 String PLATFORM_VERSION_TEXT = getPlatformVersionCode()
 String PLATFORM_VERSION_NAME = getPlatformVersionName()
-def JSENV_VERSION = "1.2.8"
-
-// add version file
-task addVersionFile(type: Exec) {
-    def versionFilePath = "" + projectDir + "/src/main/resources/jsenv_version"
-    File versionFile = new File(versionFilePath)
-    versionFile.withOutputStream { os ->
-        os << ("jsenv_aar_version = " + JSENV_VERSION).getBytes();
-    }
-}
 
 android {
     buildTypes {
@@ -75,19 +65,10 @@ dependencies {
     api 'com.caverock:androidsvg:1.4'
     api 'org.greenrobot:eventbus:3.1.1'
     api 'com.tencent:mmkv:1.2.1'
-    compileOnly project(':card-api')
     api project(":annotation")
     implementation project(":debug-log")
+    implementation project(":jsenv")
     api 'com.google.zxing:core:3.1.0'
-
-    def jsenvArtifactId = 'jsenv'
-    def jsenvVersionCode = JSENV_VERSION
-    if ('true' == project.properties['noV8Symbols']) {
-        jsenvArtifactId += '-no-v8symbols'
-    }
-    def jsenv = jsenvArtifactId + "-" + jsenvVersionCode + ".aar"
-
-    api fileTree(dir: 'jsenv-libs', include: [jsenv])
     // api fileTree(include: ['*.aar'], dir: '/yourproject/build/outputs/aar')
     implementation "androidx.recyclerview:recyclerview:${rootProject.recyclerviewVersion}"
     implementation "androidx.constraintlayout:constraintlayout:${rootProject.androidXconstraintlayoutVersion}"
